@@ -9,7 +9,14 @@ app.use(cors());
 // ================ ROUTES ================= //
 
 // GET
-
+app.get('/movies', async (req, res)=>{
+    try{
+        const allMovies = await movie.query('SELECT * FROM movielist')
+        res.json(allMovies.rows)
+    } catch (err) {
+        console.log(err.message)
+    }
+})
 // POST
 app.post('/movie', async (req, res)=>{
     try{
