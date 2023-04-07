@@ -17,6 +17,17 @@ app.get('/movies', async (req, res)=>{
         console.log(err.message)
     }
 })
+// Show one 
+
+app.get('/movie/:id', async (req, res)=>{
+    try {
+        const { id } = req.params
+        const oneMovie = await movie.query('SELECT * FROM movielist WHERE id = $1', [id]);
+        res.json(oneMovie.rows[0])
+    } catch (err) {
+        console.log(err.message);
+    }
+})
 // POST
 app.post('/movie', async (req, res)=>{
     try{
