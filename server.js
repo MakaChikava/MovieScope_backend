@@ -21,9 +21,9 @@ app.get('/movies', async (req, res)=>{
 
 app.get('/movie/:id', async (req, res)=>{
     try {
-        const { id } = req.params
+        const { id } = req.params;
         const oneMovie = await movie.query('SELECT * FROM movielist WHERE id = $1', [id]);
-        res.json(oneMovie.rows[0])
+        res.json(oneMovie.rows[0]);
     } catch (err) {
         console.log(err.message);
     }
@@ -50,8 +50,31 @@ app.post('/movie', async (req, res)=>{
     }
 })
 // DELETE
-
+app.delete('/movie/:id', async (req, res)=>{
+    try {
+        const { id } = req.params;
+        const deleteMovie = await movie.query('DELETE FROM movielist WHERE id = $1', [id])
+    } catch (err) {
+        console.log(err.message)
+    }
+})
 // UPDATE
+app.put('/movie/:id', async (req, res)=>{
+    try {
+        const { title } = req.body;
+        const { description } = req.body;
+        const { poster } = req.body;
+        const { genre } = req.body;
+        const { type } = req.body;
+        const { duration } = req.body;
+        const { release_date } = req.body;
+        const { id } = req.params;
+        const updateMovie = await movie.query('UPDATE FROM movielist SET (title, description, poster, genre, type, duration, release_date) WHERE id = $1', [title, description, poster, genre, type, duration, release_date, id])
+    } catch (err) {
+        console.log(err.message)
+    }
+})
+
 
 app.listen(8000, () => {
     console.log("Listening ...")
