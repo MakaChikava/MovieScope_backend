@@ -54,6 +54,7 @@ app.delete('/movie/:id', async (req, res)=>{
     try {
         const { id } = req.params;
         const deleteMovie = await movie.query('DELETE FROM movielist WHERE id = $1', [id])
+        res.json(deleteMovie)
         res.redirect('/movies')
     } catch (err) {
         console.log(err.message)
@@ -71,6 +72,7 @@ app.put('/movie/:id', async (req, res)=>{
         const { release_date } = req.body;
         const { id } = req.params;
         const updateMovie = await movie.query(`UPDATE movielist SET (title, description, poster, genre, type, duration, release_date) = ($1, $2, $3, $4, $5, $6, $7) WHERE id = ${id}`, [title, description, poster, genre, type, duration, release_date]);
+        res.json(updateMovie)
         res.redirect('/movies')
     } catch (err) {
         console.log(err.message)
